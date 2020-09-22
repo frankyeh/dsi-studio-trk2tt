@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -l nodes=1:ppn=1
+#PBS -l vmem=8gb
+#PBS -l walltime=1:00:00
+#PBS -N dsi-studio-trk2tt
+
+set -e  
+
+trk=$(jq -r .trk config.json)
+
+# create symbolic link here
+trk_base_name=${trk##*/}
+rm -f ${trk_base_name}
+ln -s ${trk} ${trk_base_name}
+
+
+time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=${trk_base_name} --output=${trk_base_name}.tt.gz
+
+# move file to tt folder
+mkdir tt
+mv ${trk_base_name}.tt.gz tt
