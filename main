@@ -17,5 +17,5 @@ ln -s ${trk} ${trk_base_name}
 time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=${trk_base_name} --output=${trk_base_name}.tt.gz
 
 # move file to tt folder
-mkdir tt
-mv ${trk_base_name}.tt.gz tt
+mkdir -p tt
+mv ${trk_base_name}.tt.gz tt/tt.gz
