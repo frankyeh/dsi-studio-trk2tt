@@ -8,13 +8,8 @@ set -e
 
 trk=$(jq -r .track config.json)
 
-# DSI Studio takes trk.gz 
-gzip -c ${trk} > data.${trk##*/}.gz
+time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=${trk} --output=data.${trk##*/}.tt.gz
 
-time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=data.${trk##*/}.gz --output=data.${trk##*/}.tt.gz
-
-#remove the trk gz file
-rm -f data.${trk##*/}.gz
 
 # move file to tt folder
 mkdir -p tt
