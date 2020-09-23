@@ -12,9 +12,9 @@ trk=$(jq -r .track config.json)
 trk_base_name=${trk##*/}
 rm -f ${trk_base_name}
 ln -s ${trk} ${trk_base_name}
+gzip ${trk_base_name}
 
-
-time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=${trk_base_name} --output=${trk_base_name}.tt.gz
+time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=${trk_base_name}.gz --output=${trk_base_name}.tt.gz
 
 # move file to tt folder
 mkdir -p tt
