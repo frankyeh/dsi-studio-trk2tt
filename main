@@ -8,7 +8,7 @@ set -e
 
 trk=$(jq -r .track config.json)
 
-gzip -c ${trk} data.${trk##*/}.gz
+gzip -c ${trk} > data.${trk##*/}.gz
 
 time singularity exec -e docker://dsistudio/dsistudio dsi_studio --action=exp --source=data.${trk##*/}.gz --output=data.${trk##*/}.tt.gz
 
